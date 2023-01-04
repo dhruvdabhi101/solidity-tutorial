@@ -24,9 +24,9 @@ contract Bank{
   payable
   minimum  {
     LaxmiChitFunds[msg.sender].owner = msg.sender;
-    LaxmiChitFunds[balance].balance = msg.value; 
-    LaxmiChitFunds[accountCreatedTime] = block.timestamp;
-    emit balanceAdded(msg.sender,msg.value,block.timestamp)
+    LaxmiChitFunds[msg.sender].balance = msg.value; 
+    LaxmiChitFunds[msg.sender].accountCreatedTime = block.timestamp;
+    emit balanceAdded(msg.sender,msg.value,block.timestamp);
   }
   // adding money to account 
 
@@ -35,19 +35,16 @@ contract Bank{
   payable
   minimum{
     LaxmiChitFunds[msg.sender].balance += msg.value ;
-    emit balanceAdded(msg.sender, msg.value, block.timestamp)
+    emit balanceAdded(msg.sender, msg.value, block.timestamp);
   }
   function withdraw()
   public 
   payable
   {
-    payable (msg.sender).transfer(LaxmiChitFunds[msg.sender].balance);
+    payable(msg.sender).transfer(LaxmiChitFunds[msg.sender].balance);
+    LaxmiChitFunds[msg.sender].balance = 0;
     emit withdrawalBalance(msg.sender, msg.value, block.timestamp);
 
   }
   
 }
-
-
-
-
